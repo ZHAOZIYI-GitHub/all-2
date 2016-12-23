@@ -499,11 +499,14 @@ void NEW_serial()
 
 		else
 		{
+			Serial.print("0");
+			Serial.print(" ");
 		}
 	}
 	else
 	{
-
+		Serial.print("0");
+		Serial.print(" ");
 	}
 	//ÐÄÇé
 
@@ -568,7 +571,7 @@ void NEW_serial()
 	{
 		Serial.print(0);
 	}
-	Serial.println();
+	Serial.println(" ");
 	new_Delay(3000);
 }
 
