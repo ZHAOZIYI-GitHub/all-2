@@ -36,6 +36,8 @@ int fine_fengmingqi;
 
 #define fine_fengmingqi_delay 10   //火焰蜂鸣器延时
 
+int xianyanshi;
+
 #define Guangqiang_Out A0
 
 #define Guangqiang_In  A1
@@ -124,7 +126,7 @@ void send_data_Fire()
 void new_Delay(int Delay)//延时函数
 {
 	int i;
-	for (i = 0; i<(Delay / 50); i++)
+	for (i = 0; i<(Delay / xianyanshi); i++)
 		fengmingqi1();
 }
 
@@ -472,6 +474,15 @@ void new1_Delay(int Delay)//延时函数
 		{
 			fengmingqi1();
 		}
+		else if (digitalRead(menling) == 1)
+		{
+			fengmingqi1();
+
+		}
+		else
+		{
+			delay(50);
+		}
 	}
 }
 
@@ -572,12 +583,14 @@ void NEW_serial()
 		Serial.print(1);
 		Serial.print(" ");
 		fine_fengmingqi = 1;
+		xianyanshi = fine_fengmingqi;
 	}
 	else
 	{
 		Serial.print(0);
 		Serial.print(" ");
 		fine_fengmingqi = 0;
+		xianyanshi=fine_fengmingqi;
 	}
 	//1.2为变化，水闸动作,占1位
 	if (B_OpenToWater == 1)
