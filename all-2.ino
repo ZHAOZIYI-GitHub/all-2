@@ -42,6 +42,8 @@ int fine_fengmingqi;
 
 #define GuangqiangMax 200
 
+#define Light 12
+
 int D_OpenTolight = 0;//开关
 
 int B_OpenTolight = 0;//变化
@@ -53,6 +55,8 @@ int B_OpenTolight = 0;//变化
 int D_OpenToWater = 0;//开关
 
 int B_OpenToWater = 0;//变化
+
+
 
 const char chare_temperturer[] = "Temperture";
 
@@ -163,12 +167,14 @@ void CloseChuanglian()
 {
 	D_OpenTolight = 1;
 	B_OpenTolight = 1;
+	digitalWrite(Light,1);
 }
 
 void OpenLight()
 {
 	D_OpenTolight = 2;
 	B_OpenTolight = 1;
+	digitalWrite(Light, 0);
 }
 
 void QWI()
@@ -355,6 +361,7 @@ void setpin()//端口初始化
 	pinMode(Guangqiang_Out, INPUT);
 	pinMode(Guangqiang_In, INPUT);
 	pinMode(Turang0shidu, INPUT);
+	pinMode(Light, OUTPUT);
 }
 
 void panduan()
