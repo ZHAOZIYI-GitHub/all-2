@@ -56,8 +56,6 @@ int D_OpenToWater = 0;//开关
 
 int B_OpenToWater = 0;//变化
 
-
-
 const char chare_temperturer[] = "Temperture";
 
 const char chare_Cr[] = "Mencoming";
@@ -364,56 +362,89 @@ void setpin()//端口初始化
 	pinMode(Light, OUTPUT);
 }
 
-void panduan()
-{
-	if (QW3[0] == 1)
-	{
-		if (Weizhigaibian == 1)
-		{
-			send_data_Tc_Outside();
-			if ((Temperature_geter(DHT11PIN_IN) - Temperature_geter(DHT11PIN_OUT)) >= 10)
-			{
-				send_data_cothering();
-			}
-			else if ((Temperature_geter(DHT11PIN_IN) - Temperature_geter(DHT11PIN_OUT)) <= -10)
-			{
-				send_data_cothering();
-			}
-			else
-			{
-			}
-		}
+//void panduan()
+//{
+//	if (QW3[0] == 1)
+//	{
+//		if (Weizhigaibian == 1)
+//		{
+//			send_data_Tc_Outside();
+//			if ((Temperature_geter(DHT11PIN_IN) - Temperature_geter(DHT11PIN_OUT)) >= 10)
+//			{
+//				send_data_cothering();
+//			}
+//			else if ((Temperature_geter(DHT11PIN_IN) - Temperature_geter(DHT11PIN_OUT)) <= -10)
+//			{
+//				send_data_cothering();
+//			}
+//			else
+//			{
+//			}
+//		}
+//
+//	}
+//	else {
+//	}
+//	if (QW3[1] == 2)
+//	{
+//		send_data_Zhaoji();
+//	}
+//	else {
+//	}
+//	if (digitalRead(menling) == 1)
+//	{
+//		send_data_mencoming();
+//	}
+//	else {
+//	}
+//	if (Weizhigaibian == 1)
+//	{
+//		//判断位置方向
+//		Weizhigaibian = 0;
+//	}
+//	else {
+//	}
+//	if (digitalRead(fengmingqipin) == 1)
+//	{
+//		fengmingqi = 1;
+//	}
+//	else
+//	{
+//		fengmingqi = 0;
+//	}
+//	if (GuangqiangGeter(1) <= GuangqiangMax)
+//	{
+//		CloseChuanglian();
+//	}
+//	else
+//	{
+//		OpenLight();
+//	}
+//	if (TurangshiduGeter(0) <= TurangshiduMax)
+//	{
+//		OpenToWater(0);
+//	}
+//	else
+//	{
+//		CloseToWater(0);
+//	}
+//	if (analogRead(HuoyanPin) == 1)
+//	{
+//		//send_data_Fire();
+//		fine_fengmingqi = 1;
+//	}
+//	else
+//	{
+//		fengmingqi = 0;
+//		fine_fengmingqi = 1;
+//	}
+//}
 
-	}
-	else {
-	}
-	if (QW3[1] == 2)
-	{
-		send_data_Zhaoji();
-	}
-	else {
-	}
-	if (digitalRead(menling) == 1)
-	{
-		send_data_mencoming();
-	}
-	else {
-	}
-	if (Weizhigaibian == 1)
-	{
-		//判断位置方向
-		Weizhigaibian = 0;
-	}
-	else {
-	}
-	if (digitalRead(fengmingqipin) == 1)
-	{
-		fengmingqi = 1;
-	}
-	else
-	{
-		fengmingqi = 0;
-	}
+void shuju()
+{
+	PanduanQW();
+	fengmingqi1();
+
 	if (GuangqiangGeter(1) <= GuangqiangMax)
 	{
 		CloseChuanglian();
@@ -430,22 +461,18 @@ void panduan()
 	{
 		CloseToWater(0);
 	}
-	if (analogRead(HuoyanPin) == 1)
-	{
-		send_data_Fire();
-		fine_fengmingqi = 1;
-	}
-	else
-	{
-		fengmingqi = 0;
-		fine_fengmingqi = 1;
-	}
 }
 
-void shuju()
+void new1_Delay(int Delay)//延时函数
 {
-	PanduanQW();
-	fengmingqi1();
+	int i;
+	for (i = 0; i < (Delay / 50); i++)
+	{
+		if (digitalRead(HuoyanPin) == 1)
+		{
+			fengmingqi1();
+		}
+	}
 }
 
 /*
@@ -572,14 +599,30 @@ void NEW_serial()
 		B_OpenTolight = 0;
 		Serial.print(D_OpenTolight);//2为开灯，1为关窗帘,0为无动作
 		D_OpenTolight = 0;
-
 	}
 	else
 	{
 		Serial.print(0);
 	}
 	Serial.println(" ");
-	new_Delay(3000);
+	new1_Delay(3000);
+}
+
+void Debug1()
+{
+	Serial.print("(");
+	Serial.print(B_OpenTolight);
+	Serial.print(" ");
+	Serial.print(B_OpenToWater);
+	Serial.print(" ");
+	Serial.print(D_OpenTolight);
+	Serial.print(" ");
+	Serial.print(D_OpenToWater);
+	Serial.print(" ");
+	Serial.print(analogRead(A2));
+	Serial.print(")\n");
+	delay(100);
+
 }
 
 void Debug()
@@ -609,8 +652,8 @@ void loop()
 {
 	fengmingqi1();
 	shuju();//数据初始化
-			//panduan();//判断部分
-	NEW_serial();//新输出部分
-				 //Debug();
+			//panduan();//判断部分(旧版)
+	NEW_serial();//（包括判断）新输出部分
+				// Debug1();
 
 }
