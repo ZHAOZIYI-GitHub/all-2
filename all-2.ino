@@ -167,14 +167,14 @@ void CloseChuanglian()
 {
 	D_OpenTolight = 1;
 	B_OpenTolight = 1;
-	digitalWrite(Light,1);
+	digitalWrite(Light,0);
 }
 
 void OpenLight()
 {
 	D_OpenTolight = 2;
 	B_OpenTolight = 1;
-	digitalWrite(Light, 0);
+	digitalWrite(Light, 1);
 }
 
 void QWI()
@@ -618,7 +618,7 @@ void NEW_serial()
 		Serial.print(0);
 	}
 	Serial.println(" ");
-	new1_Delay(3000);
+	new1_Delay(4500);
 }
 
 void Debug1()
