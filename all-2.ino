@@ -42,7 +42,7 @@ int xianyanshi;
 
 #define Guangqiang_In  A1
 
-#define GuangqiangMax 200
+#define GuangqiangMax 500
 
 #define Light 12
 
@@ -632,7 +632,9 @@ void Debug1()
 	Serial.print(" ");
 	Serial.print(D_OpenToWater);
 	Serial.print(" ");
-	Serial.print(analogRead(A2));
+	Serial.print(analogRead(A0));
+	Serial.print(" ");
+	Serial.print(analogRead(A1));
 	Serial.print(")\n");
 	delay(100);
 
@@ -667,6 +669,6 @@ void loop()
 	shuju();//数据初始化
 			//panduan();//判断部分(旧版)
 	NEW_serial();//（包括判断）新输出部分
-				// Debug1();
+				//Debug1();
 
 }
